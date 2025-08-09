@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stealth Messenger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #020617; /* slate-950 */
+      }
+      .sidebar-icon {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        text-align: center;
+        font-size: 18px;
+        line-height: 24px;
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-300">
+    <div class="flex h-screen bg-slate-950">
+      <!-- Sidebar Navigation -->
+      <aside
+        class="w-20 md:w-64 bg-slate-900 flex flex-col border-r border-slate-800"
+      >
+        <div
+          class="flex items-center justify-center md:justify-start md:pl-6 h-20 border-b border-slate-800"
+        >
+          <span class="text-2xl font-bold text-emerald-400">S</span>
+          <span class="hidden md:block ml-3 text-xl font-bold text-white"
+            >Stealth Messenger</span
+          >
+        </div>
+        <nav id="sidebar-nav" class="flex-grow pt-6 space-y-2 px-2 md:px-4">
+          <a
+            href="#encode"
+            class="nav-link flex items-center p-3 rounded-lg bg-emerald-500/10 text-emerald-400"
+          >
+            <span class="sidebar-icon">📤</span
+            ><span class="hidden md:inline-block ml-4">Encode</span>
+          </a>
+          <a
+            href="#decode"
+            class="nav-link flex items-center p-3 rounded-lg hover:bg-slate-700/50 text-gray-400"
+          >
+            <span class="sidebar-icon">📥</span
+            ><span class="hidden md:inline-block ml-4">Decode</span>
+          </a>
+        </nav>
+        <div class="p-4 border-t border-slate-800 mt-auto">
+          <div class="hidden md:block text-xs text-center text-slate-500">
+            Useless Hackathon Project
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <header
+          class="flex items-center justify-between h-20 px-6 border-b border-slate-800 bg-slate-900"
+        >
+          <div class="text-2xl font-semibold text-white" id="view-title">
+            Encode Message
+          </div>
+          <div
+            class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-emerald-400 border-2 border-slate-600"
+          >
+            G
+          </div>
+        </header>
+
+        <main
+          class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-950 p-4 md:p-6"
+        >
+          <!-- Encode View -->
+          <div id="view-encode" class="view-content">
+            <div class="grid grid-cols-1 lg:grid-cols-7 gap-6">
+              <div
+                class="bg-slate-900 p-6 rounded-xl border border-slate-800 lg:col-span-4"
+              >
+                <h3 class="text-lg font-semibold text-white mb-2">
+                  1. Enter Secret Message
+                </h3>
+                <p class="text-sm text-gray-400 mb-4">
+                  Type the message you want to hide inside the image.
+                </p>
+                <textarea
+                  id="message"
+                  rows="5"
+                  placeholder="Your secret message goes here..."
+                  class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                ></textarea>
+              </div>
+              <div
+                class="bg-slate-900 p-6 rounded-xl border border-slate-800 lg:col-span-3"
+              >
+                <h3 class="text-lg font-semibold text-white mb-2">
+                  2. Select Carrier Image
+                </h3>
+                <p class="text-sm text-gray-400 mb-4">
+                  Choose a BMP file to act as the carrier for your message.
+                </p>
+                <input
+                  type="file"
+                  id="encode-image"
+                  accept="image/bmp"
+                  class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-500/10 file:text-emerald-400 hover:file:bg-emerald-500/20 cursor-pointer"
+                />
+              </div>
+            </div>
+            <div
+              class="mt-6 bg-slate-900 p-6 rounded-xl border border-slate-800"
+            >
+              <h3 class="text-lg font-semibold text-white mb-2">
+                3. Execute Operation
+              </h3>
+              <p class="text-sm text-gray-400 mb-4">
+                This will embed your message into the image and trigger a
+                download of the new file.
+              </p>
+              <button
+                onclick="handleEncode()"
+                class="w-full bg-emerald-500 text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-colors"
+              >
+                Encode & Download Image
+              </button>
+            </div>
+          </div>
+
+          <!-- Decode View -->
+          <div id="view-decode" class="view-content hidden">
+            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+              <h3 class="text-lg font-semibold text-white mb-2">
+                1. Upload Encoded BMP Image
+              </h3>
+              <p class="text-sm text-gray-400 mb-4">
+                Select the BMP file that you suspect contains a hidden message.
+              </p>
+              <input
+                type="file"
+                id="decode-image"
+                accept="image/bmp"
+                class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-500/10 file:text-emerald-400 hover:file:bg-emerald-500/20 cursor-pointer"
+              />
+              <button
+                onclick="handleDecode()"
+                class="w-full mt-6 bg-emerald-500 text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-colors"
+              >
+                Reveal Secret Message
+              </button>
+            </div>
+            <div
+              id="result-container"
+              class="mt-6 bg-slate-900 p-6 rounded-xl border border-slate-800 hidden"
+            >
+              <h3 class="text-lg font-semibold text-white mb-4">
+                Revealed Message:
+              </h3>
+              <p
+                id="result"
+                class="font-mono text-emerald-400 whitespace-pre-wrap"
+              ></p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navLinks = document.querySelectorAll(".nav-link");
+        const viewTitle = document.getElementById("view-title");
+
+        function navigateTo(viewId) {
+          document
+            .querySelectorAll(".view-content")
+            .forEach((v) => v.classList.add("hidden"));
+          document.getElementById(`view-${viewId}`).classList.remove("hidden");
+
+          navLinks.forEach((l) => {
+            l.classList.remove("bg-emerald-500/10", "text-emerald-400");
+            l.classList.add("hover:bg-slate-700/50", "text-gray-400");
+          });
+
+          const activeLink = document.querySelector(
+            `.nav-link[href="#${viewId}"]`
+          );
+          if (activeLink) {
+            activeLink.classList.add("bg-emerald-500/10", "text-emerald-400");
+            activeLink.classList.remove("hover:bg-slate-700/50");
+          }
+          viewTitle.textContent =
+            viewId.charAt(0).toUpperCase() + viewId.slice(1) + " Message";
+        }
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const viewId = link.getAttribute("href").substring(1);
+            navigateTo(viewId);
+          });
+        });
+      });
+
+      async function handleEncode() {
+        const imageFile = document.getElementById("encode-image").files[0];
+        const message = document.getElementById("message").value;
+
+        if (!imageFile || !message) {
+          alert("Please select an image and enter a message.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", imageFile);
+        formData.append("message", message);
+
+        try {
+          const response = await fetch("/encode", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error(await response.text());
+          }
+
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = "encoded_image.bmp";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          alert("Encoded image downloaded successfully!");
+        } catch (error) {
+          alert("Error: " + error.message);
+        }
+      }
+
+      async function handleDecode() {
+        const imageFile = document.getElementById("decode-image").files[0];
+        const resultContainer = document.getElementById("result-container");
+        const resultEl = document.getElementById("result");
+
+        if (!imageFile) {
+          alert("Please select an image to decode.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        try {
+          const response = await fetch("/decode", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error(await response.text());
+          }
+
+          const revealedMessage = await response.text();
+          resultEl.textContent = revealedMessage;
+          resultContainer.classList.remove("hidden");
+        } catch (error) {
+          alert("Error: " + error.message);
+        }
+      }
+    </script>
+  </body>
+</html>
