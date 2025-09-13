@@ -74,7 +74,7 @@ None — just your laptop, Wi-Fi, and a questionable sense of humor
 Implementation
 
 Installation
-Use this website link to see working https://tinyurl.com/3s7a5dnm
+Use this website link to see working https://tinyurl.com/3mapuze8(we had updated the link due to issues in AWS server)
 Also try download bnp images for encoding and decoding..
 git clone https://github.com/yourusername/stealth-messenger.git
 cd stealth-messenger
