@@ -7,9 +7,9 @@ Team Name: X_Elite
 
 Team Members
 
-Team Lead: Amith Biju – Cochin University College of Engineering Kuttanad
+Team Lead: Amith Biju 
 
-Member 2: Aswin P Pai – Cochin University College of Engineering Kuttanad
+Member 2: Aswin P Pai 
 
 
 
